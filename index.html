@@ -3,236 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peach State — Personalised Print, Hartlepool</title>
+<title>Peach State — Personalised Design, Hartlepool</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --terra:   #C96347;
-    --terra-d: #A84D35;
-    --cream:   #FAF6F1;
-    --cream-d: #F0E8DF;
-    --sand:    #E8D5C4;
-    --script:  'Dancing Script', cursive;
-    --body:    'Inter', sans-serif;
-    --dark:    #2A1A14;
-    --mid:     #7A5A50;
-    --white:   #FFFFFF;
-    --radius:  12px;
-    --shadow:  0 2px 16px rgba(42,26,20,0.10);
+    --sage:      #6B8858;
+    --sage-d:    #506845;
+    --sage-pale: #EFF4EC;
+    --salmon:    #E07A62;
+    --salmon-d:  #C4614A;
+    --peach-bg:  #FDF8F5;
+    --peach-mid: #F5EAE3;
+    --cream:     #FEFCFA;
+    --sand:      #EDE2D8;
+    --dark:      #2A2A2A;
+    --mid:       #7A6E68;
+    --white:     #FFFFFF;
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --body:      'Inter', sans-serif;
+    --radius:    10px;
+    --shadow:    0 2px 16px rgba(42,42,42,0.08);
   }
   html { scroll-behavior: smooth; }
   body { font-family: var(--body); background: var(--cream); color: var(--dark); }
 
   /* ── DEMO BANNER ── */
   .demo-banner {
-    background: var(--dark); color: #C0A090; text-align: center;
-    padding: 9px 20px; font-size: 0.78rem; letter-spacing: 0.02em;
+    background: var(--dark); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 9px 20px; font-size: 0.75rem; letter-spacing: 0.02em;
   }
-  .demo-banner strong { color: var(--terra); }
+  .demo-banner strong { color: var(--salmon); }
+  .demo-banner a { color: var(--salmon); }
 
   /* ── NAV ── */
   nav {
     background: var(--cream); border-bottom: 1px solid var(--sand);
-    padding: 0 5%; height: 66px;
+    padding: 0 6%; height: 72px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 50;
   }
-  .logo {
-    font-family: var(--script); font-size: 2rem; color: var(--terra);
-    text-decoration: none; line-height: 1; letter-spacing: 0.02em;
-  }
-  nav ul { display: flex; gap: 28px; list-style: none; }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo img { height: 42px; width: auto; }
+  nav ul { display: flex; gap: 32px; list-style: none; }
   nav ul a { text-decoration: none; color: var(--mid); font-size: 0.88rem; font-weight: 500; transition: color .2s; }
-  nav ul a:hover { color: var(--terra); }
+  nav ul a:hover { color: var(--sage); }
   .nav-cta {
-    background: var(--terra); color: var(--white);
+    background: var(--sage); color: var(--white);
     padding: 10px 22px; border-radius: 8px; text-decoration: none;
     font-size: 0.88rem; font-weight: 600; transition: background .2s;
   }
-  .nav-cta:hover { background: var(--terra-d); }
+  .nav-cta:hover { background: var(--sage-d); }
 
   /* ── HERO ── */
   .hero {
-    background: var(--terra);
-    min-height: 520px;
+    background: var(--peach-bg);
     display: grid; grid-template-columns: 1fr 1fr;
-    position: relative; overflow: hidden;
+    min-height: 560px; border-bottom: 1px solid var(--sand);
   }
   .hero-left {
     padding: 80px 5% 80px 8%;
     display: flex; flex-direction: column; justify-content: center;
-    position: relative; z-index: 2;
   }
   .hero-eyebrow {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 16px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--salmon); margin-bottom: 18px;
   }
   .hero-title {
-    font-family: var(--script); font-size: clamp(3rem, 5vw, 4.5rem);
-    color: var(--white); line-height: 1.1; margin-bottom: 20px;
+    font-family: var(--serif); font-size: clamp(2.8rem, 4.5vw, 4rem);
+    color: var(--sage-d); line-height: 1.15; font-weight: 600;
+    margin-bottom: 20px;
   }
   .hero-sub {
-    font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7;
+    font-size: 1rem; color: var(--mid); line-height: 1.75;
     margin-bottom: 36px; max-width: 420px;
   }
-  .hero-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: var(--white); color: var(--terra);
-    padding: 14px 28px; border-radius: 10px; text-decoration: none;
-    font-weight: 700; font-size: 0.95rem; width: fit-content;
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--sage); color: var(--white);
+    padding: 13px 26px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 0.9rem; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--sage-d); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--sage);
+    padding: 13px 26px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 0.9rem; border: 1.5px solid var(--sage);
     transition: all .2s;
   }
-  .hero-btn:hover { background: var(--cream); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+  .btn-outline:hover { background: var(--sage-pale); }
 
   .hero-right {
-    position: relative; display: flex; align-items: center; justify-content: center;
+    background: var(--peach-mid);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-logo-display {
+    display: flex; flex-direction: column; align-items: center; gap: 0;
     padding: 40px;
   }
-  /* Arch shape */
-  .hero-arch {
-    width: 320px; height: 420px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 160px 160px 0 0;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
-  .neon-text {
-    font-family: var(--script); font-size: 2.2rem;
-    color: rgba(255,255,255,0.9);
-    text-shadow: 0 0 20px rgba(255,200,180,0.8), 0 0 40px rgba(255,160,130,0.5);
-    text-align: center; line-height: 1.3;
-    padding: 20px;
+  .hero-logo-display img { width: 280px; max-width: 80%; filter: drop-shadow(0 4px 24px rgba(107,136,88,0.15)); }
+  .hero-tagline {
+    font-family: var(--serif); font-size: 1.1rem; color: var(--mid);
+    font-style: italic; letter-spacing: 0.04em; margin-top: -8px;
   }
 
-  /* ── SECTION ── */
-  .section { padding: 72px 5%; }
+  /* ── SECTIONS ── */
+  .section { padding: 72px 6%; }
   .section-tag {
-    display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--terra); margin-bottom: 12px;
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--salmon); margin-bottom: 10px;
   }
   .section-title {
-    font-family: var(--script); font-size: clamp(2rem, 3.5vw, 2.8rem);
-    color: var(--dark); margin-bottom: 16px; line-height: 1.2;
+    font-family: var(--serif); font-size: clamp(1.9rem, 3vw, 2.6rem);
+    color: var(--sage-d); margin-bottom: 14px; line-height: 1.2; font-weight: 600;
   }
-  .section-sub { color: var(--mid); font-size: 0.95rem; line-height: 1.7; max-width: 520px; margin-bottom: 40px; }
+  .section-sub { color: var(--mid); font-size: 0.93rem; line-height: 1.75; max-width: 500px; margin-bottom: 40px; }
 
   /* ── HOW IT WORKS ── */
-  .how { background: var(--white); }
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .how { background: var(--white); border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .step {
-    text-align: center; padding: 28px 16px; border-radius: 16px;
-    background: var(--cream);
+    text-align: center; padding: 28px 16px; border-radius: 12px;
+    background: var(--peach-bg); border: 1px solid var(--sand);
   }
   .step-num {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--terra); color: var(--white);
-    font-family: var(--script); font-size: 1.4rem;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--sage); color: var(--white);
+    font-family: var(--serif); font-size: 1.3rem; font-weight: 600;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 14px;
   }
-  .step h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
+  .step h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--sage-d); margin-bottom: 8px; }
   .step p { font-size: 0.82rem; color: var(--mid); line-height: 1.6; }
 
-  /* ── PRODUCT GRID (placeholder) ── */
-  .products { background: var(--cream-d); }
+  /* ── PRODUCTS ── */
+  .products { background: var(--peach-bg); }
+  .product-note {
+    background: var(--peach-mid); border: 1.5px dashed var(--sand);
+    border-radius: 8px; padding: 12px 16px; font-size: 0.8rem;
+    color: var(--mid); margin-bottom: 28px; line-height: 1.5;
+  }
+  .product-note strong { color: var(--sage-d); }
   .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
   .product-card {
-    background: var(--white); border-radius: 14px; overflow: hidden;
-    box-shadow: var(--shadow); transition: all .25s; cursor: pointer; text-decoration: none;
+    background: var(--white); border-radius: 12px; overflow: hidden;
+    box-shadow: var(--shadow); transition: all .25s; text-decoration: none;
+    border: 1px solid var(--sand);
   }
-  .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(42,26,20,0.14); }
+  .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(107,136,88,0.14); }
   .product-img {
-    aspect-ratio: 1; background: var(--sand);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 72px; position: relative;
+    aspect-ratio: 1; background: var(--peach-mid);
+    display: flex; align-items: center; justify-content: center; position: relative;
   }
-  .product-placeholder-label {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    background: rgba(250,246,241,0.85);
-    font-size: 0.78rem; font-weight: 700; color: var(--mid);
-    letter-spacing: 0.04em; text-transform: uppercase;
-    text-align: center; padding: 20px;
+  .placeholder-box {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    padding: 20px; text-align: center;
   }
+  .placeholder-icon { font-size: 2.5rem; opacity: 0.4; }
+  .placeholder-text { font-size: 0.72rem; font-weight: 600; color: var(--mid); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.4; }
   .product-info { padding: 16px 18px 18px; }
-  .product-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
-  .product-desc { font-size: 0.8rem; color: var(--mid); margin-bottom: 12px; line-height: 1.5; }
+  .product-name { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: var(--sage-d); margin-bottom: 4px; }
+  .product-desc { font-size: 0.8rem; color: var(--mid); margin-bottom: 12px; line-height: 1.5; font-style: italic; }
   .product-footer { display: flex; align-items: center; justify-content: space-between; }
-  .product-price { font-family: var(--script); font-size: 1.3rem; color: var(--terra); }
+  .product-price { font-family: var(--serif); font-size: 1.2rem; color: var(--salmon); font-weight: 600; }
   .product-cta {
-    background: var(--cream-d); color: var(--terra);
-    padding: 7px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 700;
-    border: none; cursor: pointer; transition: all .15s;
+    background: var(--sage-pale); color: var(--sage);
+    padding: 7px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 600;
+    border: none; cursor: pointer; transition: all .15s; font-family: var(--body);
   }
-  .product-cta:hover { background: var(--terra); color: var(--white); }
+  .product-cta:hover { background: var(--sage); color: var(--white); }
 
-  /* ── DESIGN CTA BAND ── */
+  /* ── DESIGN BAND ── */
   .design-band {
-    background: var(--dark); padding: 72px 5%;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    background: var(--sage-d); padding: 80px 6%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
   }
-  .design-band-left { }
-  .design-band-left .section-tag { color: var(--terra); }
-  .design-band-left .section-title { color: var(--white); }
-  .design-band-left .section-sub { color: rgba(255,255,255,0.6); margin-bottom: 0; }
-  .design-band-right { display: flex; flex-direction: column; gap: 16px; }
-  .feature-item {
-    background: rgba(255,255,255,0.05); border-radius: 10px; padding: 16px 20px;
+  .design-band .section-tag { color: rgba(255,255,255,0.5); }
+  .design-band .section-title { color: var(--white); }
+  .design-band .section-sub { color: rgba(255,255,255,0.6); margin-bottom: 28px; }
+  .btn-light {
+    background: var(--white); color: var(--sage-d);
+    padding: 13px 26px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 0.9rem; display: inline-flex;
+    align-items: center; gap: 8px; transition: all .2s;
+  }
+  .btn-light:hover { background: var(--peach-bg); transform: translateY(-1px); }
+  .features { display: flex; flex-direction: column; gap: 14px; }
+  .feature {
+    background: rgba(255,255,255,0.07); border-radius: 10px; padding: 16px 20px;
     display: flex; align-items: flex-start; gap: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
   }
-  .feature-icon { font-size: 1.4rem; flex-shrink: 0; }
-  .feature-title { font-weight: 700; font-size: 0.88rem; color: var(--white); margin-bottom: 3px; }
-  .feature-desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
-  .design-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: var(--terra); color: var(--white);
-    padding: 14px 28px; border-radius: 10px; text-decoration: none;
-    font-weight: 700; font-size: 0.95rem; margin-top: 24px; width: fit-content;
-    transition: all .2s;
-  }
-  .design-btn:hover { background: var(--terra-d); transform: translateY(-2px); }
+  .feature-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .feature h4 { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .feature p { font-size: 0.79rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--dark); color: rgba(255,255,255,0.5);
-    padding: 48px 5% 28px;
+    background: var(--dark); color: rgba(255,255,255,0.4);
+    padding: 48px 6% 28px;
   }
-  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 32px; }
-  .footer-brand .logo { display: block; margin-bottom: 10px; }
-  .footer-brand p { font-size: 0.82rem; line-height: 1.6; max-width: 260px; }
-  .footer-col h4 { color: var(--white); font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 40px; flex-wrap: wrap; margin-bottom: 36px;
+  }
+  .footer-logo img { height: 48px; width: auto; filter: brightness(0) invert(1) opacity(0.8); margin-bottom: 10px; }
+  .footer-logo p { font-size: 0.8rem; line-height: 1.6; max-width: 240px; }
+  .footer-col h4 {
+    color: var(--white); font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+  }
   .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 8px; }
-  .footer-col ul a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.82rem; transition: color .2s; }
-  .footer-col ul a:hover { color: var(--terra); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 0.75rem; }
-  .footer-bottom a { color: var(--terra); text-decoration: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.82rem; transition: color .2s; }
+  .footer-col a:hover { color: var(--salmon); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px;
+    display: flex; justify-content: space-between; flex-wrap: wrap;
+    gap: 8px; font-size: 0.73rem;
+  }
+  .footer-bottom a { color: var(--salmon); text-decoration: none; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
+    .hero-right { min-height: 280px; }
     .steps { grid-template-columns: repeat(2, 1fr); }
     .design-band { grid-template-columns: 1fr; }
     nav ul { display: none; }
   }
   @media (max-width: 600px) {
     .steps { grid-template-columns: 1fr; }
+    .hero-logo-display img { width: 180px; }
   }
 </style>
 </head>
 <body>
 
 <div class="demo-banner">
-  <strong>DEMO PREVIEW</strong> — Built for Jo at Peach State by Launchpad Digital Solutions.
-  Content placeholders will be replaced with your actual products and copy before launch.
-  <a href="design.html" style="color:var(--sand);margin-left:12px">Try the design tool →</a>
+  <strong>DEMO</strong> — Preview built for Jo at Peach State by Launchpad Digital Solutions.
+  Placeholder content will be replaced with your actual products before launch. &nbsp;·&nbsp;
+  <a href="design.html">Try the design tool →</a>
 </div>
 
 <nav>
-  <a href="index.html" class="logo">Peach State</a>
+  <a href="index.html" class="logo">
+    <img src="logo.png" alt="Peach State">
+  </a>
   <ul>
     <li><a href="#products">Products</a></li>
     <li><a href="design.html">Design Your Own</a></li>
@@ -244,142 +266,159 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">Personalised print · Hartlepool</div>
-    <h1 class="hero-title">Your design,<br>on everything</h1>
-    <p class="hero-sub">Design your own personalised gifts and print online — right here in your browser. Pick a product, add your text or photo, and we'll handle the rest.</p>
-    <a href="design.html" class="hero-btn">Start designing →</a>
+    <div class="hero-eyebrow">Personalised Design · Hartlepool</div>
+    <h1 class="hero-title">Made by you.<br>Printed by us.</h1>
+    <p class="hero-sub">Design your own personalised gifts and print from your browser. Pick a product, add your text or photo, and we'll handle the rest.</p>
+    <div class="hero-actions">
+      <a href="design.html" class="btn-primary">Start designing →</a>
+      <a href="#products" class="btn-outline">See products</a>
+    </div>
   </div>
   <div class="hero-right">
-    <div class="hero-arch">
-      <div class="neon-text">Peachy<br>State<br>of Mind</div>
+    <div class="hero-logo-display">
+      <img src="logo.png" alt="Peach State — Personalised Design">
     </div>
   </div>
 </section>
 
 <!-- How it works -->
-<section class="section how" id="how">
+<section class="section how">
   <div class="section-tag">Simple process</div>
   <h2 class="section-title">How it works</h2>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <h3>Pick a product</h3>
-      <p>Choose from mugs, tees, phone cases, canvas prints and more.</p>
+      <p>Choose what you want personalised — mugs, apparel, prints and more.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <h3>Add your design</h3>
-      <p>Type text, choose a font and colour, or upload your own image.</p>
+      <p>Type text, choose a font and colour, or upload your own image or logo.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h3>Preview it live</h3>
-      <p>See exactly what you'll get before you pay — no surprises.</p>
+      <p>See your design on the product in real time before you pay.</p>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <h3>We print and post</h3>
-      <p>Pay securely online. We print and dispatch within [X] working days.</p>
+      <h3>We print and deliver</h3>
+      <p>Pay securely. We print and dispatch to your door.</p>
     </div>
   </div>
 </section>
 
 <!-- Products -->
 <section class="section products" id="products">
-  <div class="section-tag">What we do</div>
+  <div class="section-tag">What we offer</div>
   <h2 class="section-title">Products</h2>
-  <p class="section-sub">[Jo — add your actual product list here. We'll replace these placeholders with your real items and prices before launch.]</p>
+  <div class="product-note">
+    <strong>Jo — placeholder section.</strong> Add your actual products, prices and photos and we'll drop them straight in before launch. The layout below shows how each product will appear.
+  </div>
   <div class="product-grid">
-    <a class="product-card" href="design.html?product=mug">
+    <a class="product-card" href="design.html">
       <div class="product-img">
-        <div class="product-placeholder-label">Your product photo goes here</div>
+        <div class="placeholder-box">
+          <span class="placeholder-icon">🖼️</span>
+          <span class="placeholder-text">Your product photo here</span>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-name">[Product name]</div>
-        <div class="product-desc">[Short description of the product — material, size, what can be personalised]</div>
+        <div class="product-desc">[Material, size, what can be personalised]</div>
         <div class="product-footer">
           <span class="product-price">£[price]</span>
-          <button class="product-cta" onclick="window.location='design.html'">Design this →</button>
+          <button class="product-cta">Design this →</button>
         </div>
       </div>
     </a>
-    <a class="product-card" href="design.html?product=tshirt">
+    <a class="product-card" href="design.html">
       <div class="product-img">
-        <div class="product-placeholder-label">Your product photo goes here</div>
+        <div class="placeholder-box">
+          <span class="placeholder-icon">🖼️</span>
+          <span class="placeholder-text">Your product photo here</span>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-name">[Product name]</div>
-        <div class="product-desc">[Short description]</div>
+        <div class="product-desc">[Material, size, what can be personalised]</div>
         <div class="product-footer">
           <span class="product-price">£[price]</span>
-          <button class="product-cta" onclick="window.location='design.html'">Design this →</button>
+          <button class="product-cta">Design this →</button>
         </div>
       </div>
     </a>
-    <a class="product-card" href="design.html?product=canvas">
+    <a class="product-card" href="design.html">
       <div class="product-img">
-        <div class="product-placeholder-label">Your product photo goes here</div>
+        <div class="placeholder-box">
+          <span class="placeholder-icon">🖼️</span>
+          <span class="placeholder-text">Your product photo here</span>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-name">[Product name]</div>
-        <div class="product-desc">[Short description]</div>
+        <div class="product-desc">[Material, size, what can be personalised]</div>
         <div class="product-footer">
           <span class="product-price">£[price]</span>
-          <button class="product-cta" onclick="window.location='design.html'">Design this →</button>
+          <button class="product-cta">Design this →</button>
         </div>
       </div>
     </a>
-    <a class="product-card" href="design.html?product=phone">
+    <a class="product-card" href="design.html">
       <div class="product-img">
-        <div class="product-placeholder-label">Your product photo goes here</div>
+        <div class="placeholder-box">
+          <span class="placeholder-icon">🖼️</span>
+          <span class="placeholder-text">Your product photo here</span>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-name">[Product name]</div>
-        <div class="product-desc">[Short description]</div>
+        <div class="product-desc">[Material, size, what can be personalised]</div>
         <div class="product-footer">
           <span class="product-price">£[price]</span>
-          <button class="product-cta" onclick="window.location='design.html'">Design this →</button>
+          <button class="product-cta">Design this →</button>
         </div>
       </div>
     </a>
   </div>
 </section>
 
-<!-- Design tool CTA -->
+<!-- Design tool band -->
 <section class="design-band">
-  <div class="design-band-left">
-    <div class="section-tag">The good bit</div>
-    <h2 class="section-title">Design it yourself</h2>
-    <p class="section-sub">No software, no back-and-forth emails. Open the design tool, pick your product, add your text or photo, and see it live before you buy.</p>
-    <a href="design.html" class="design-btn">Open design tool →</a>
+  <div>
+    <div class="section-tag">The design tool</div>
+    <h2 class="section-title">Design it yourself — live in your browser</h2>
+    <p class="section-sub">No software, no emails back and forth. Open the tool, pick your product, add your text or photo, and see it live before you buy.</p>
+    <a href="design.html" class="btn-light">Open design tool →</a>
   </div>
-  <div class="design-band-right">
-    <div class="feature-item">
+  <div class="features">
+    <div class="feature">
       <div class="feature-icon">✍️</div>
       <div>
-        <div class="feature-title">Add text your way</div>
-        <div class="feature-desc">Choose font, colour and size. Type any message, name or quote.</div>
+        <h4>Add text your way</h4>
+        <p>Choose font, colour and size. Type any name, message or quote.</p>
       </div>
     </div>
-    <div class="feature-item">
+    <div class="feature">
       <div class="feature-icon">📸</div>
       <div>
-        <div class="feature-title">Upload your photo</div>
-        <div class="feature-desc">Drop in a photo from your phone or computer. Position it exactly how you want it.</div>
+        <h4>Upload your photo or logo</h4>
+        <p>Drop in any image from your phone or computer and position it exactly.</p>
       </div>
     </div>
-    <div class="feature-item">
+    <div class="feature">
       <div class="feature-icon">👁</div>
       <div>
-        <div class="feature-title">Live preview</div>
-        <div class="feature-desc">See your design on the product in real time before you commit.</div>
+        <h4>Live preview on the product</h4>
+        <p>See your design on the actual item in real time — no guessing.</p>
       </div>
     </div>
-    <div class="feature-item">
+    <div class="feature">
       <div class="feature-icon">🔒</div>
       <div>
-        <div class="feature-title">Secure checkout</div>
-        <div class="feature-desc">Pay safely via card. Order goes straight to our print queue.</div>
+        <h4>Secure checkout</h4>
+        <p>Pay by card. Order goes straight to our print queue with your design attached.</p>
       </div>
     </div>
   </div>
@@ -388,9 +427,9 @@
 <!-- Footer -->
 <footer id="contact">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <a href="index.html" class="logo">Peach State</a>
-      <p>Personalised print and gifts. Based on York Road, Hartlepool.</p>
+    <div class="footer-logo">
+      <img src="logo.png" alt="Peach State">
+      <p>Personalised print and gifts. Based in Hartlepool.</p>
     </div>
     <div class="footer-col">
       <h4>Products</h4>
