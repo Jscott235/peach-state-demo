@@ -495,12 +495,12 @@
     <div class="panel-content" id="tab-image" style="display:none">
       <div class="panel-section">
         <div class="panel-label">Upload your image</div>
-        <div class="upload-zone" onclick="document.getElementById('imgUpload').click()">
+        <label class="upload-zone" for="imgUpload" style="display:block;cursor:pointer">
           <div class="upload-icon">📁</div>
-          <p>Click to upload a photo or logo</p>
+          <p>Tap to upload a photo or logo</p>
           <p style="margin-top:6px;font-size:0.72rem;color:#9B9B9B">JPG, PNG or GIF · Max 10MB</p>
           <input type="file" id="imgUpload" accept="image/*" onchange="addImage(event)">
-        </div>
+        </label>
         <div class="panel-label" style="margin-top:16px">Or try a sample</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <button class="add-btn" onclick="addSampleImage('heart')">❤️ Heart</button>
@@ -548,7 +548,7 @@
   <div class="canvas-area">
     <div class="canvas-toolbar">
       <button class="canvas-tool-btn" onclick="addText(); switchTab('text', document.querySelectorAll('.panel-tab')[1])">＋ Add Text</button>
-      <button class="canvas-tool-btn" onclick="switchTab('image', document.querySelectorAll('.panel-tab')[2]); document.getElementById('imgUpload').click()">📁 Upload Image</button>
+      <label for="imgUpload" class="canvas-tool-btn" style="cursor:pointer">📁 Upload Image</label>
       <button class="canvas-tool-btn" onclick="deleteSelected()">🗑 Delete selected</button>
       <button class="canvas-tool-btn" onclick="bringForward()">⬆ Forward</button>
       <button class="canvas-tool-btn" onclick="sendBackward()">⬇ Back</button>
