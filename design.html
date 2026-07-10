@@ -553,7 +553,7 @@
     </div>
     <div class="modal-actions">
       <button class="modal-btn secondary" onclick="closeModal('checkoutModal')">Back to design</button>
-      <button class="modal-btn primary" onclick="viewDashboard()">See orders dashboard →</button>
+      <button class="modal-btn primary" onclick="placeOrder()">Place order →</button>
     </div>
   </div>
 </div>
@@ -930,6 +930,31 @@
   // ── MODALS ──
   function openCheckout() { document.getElementById('checkoutModal').classList.add('open'); }
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  function placeOrder() {
+    // Export canvas as high-res PNG
+    const dataURL = fabricCanvas.toDataURL({ format: 'png', multiplier: 2 });
+
+    // Build order object
+    const existing = JSON.parse(localStorage.getItem('ps_orders') || '[]');
+    const orderNum = 41 + existing.length + 1;
+    const p = PRODUCTS[currentProduct];
+    const order = {
+      id: 'PS-00' + orderNum,
+      timestamp: Date.now(),
+      product: currentProduct,
+      productName: p.name,
+      productIcon: p.icon,
+      designImage: dataURL,
+      qty: qty,
+      price: parseFloat((p.price * qty).toFixed(2)),
+      status: 'new'
+    };
+    existing.unshift(order);
+    localStorage.setItem('ps_orders', JSON.stringify(existing));
+
+    // Redirect to dashboard
+    window.location.href = 'dashboard.html';
+  }
   function viewDashboard() { window.location.href = 'dashboard.html'; }
 
   // ── INIT ──
