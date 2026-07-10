@@ -630,18 +630,28 @@
       });
       fabricCanvas.add(ellipse);
     } else if (productKey === 'tshirt') {
-      const body = new fabric.Rect({
-        left: pw * 0.1, top: ph * 0.15, width: pw * 0.8, height: ph * 0.8,
-        fill: bgColor, rx: 8, ry: 8, selectable: false, evented: false, name: '__bg__'
-      });
-      fabricCanvas.add(body);
-      // Collar
-      const collar = new fabric.Ellipse({
-        left: pw * 0.35, top: ph * 0.12, rx: pw * 0.15, ry: ph * 0.06,
-        fill: 'transparent', stroke: bgColor, strokeWidth: pw * 0.05,
+      // Proper t-shirt silhouette
+      const shirtPath = [
+        'M', pw*0.40,  ph*0.100,   // left collar
+        'Q', pw*0.50,  ph*0.172,   // neck dip (control point)
+            pw*0.60,  ph*0.100,   // right collar
+        'L', pw*0.795, ph*0.088,   // right shoulder
+        'L', pw*0.970, ph*0.138,   // right sleeve top-outer
+        'L', pw*0.970, ph*0.275,   // right sleeve bottom-outer
+        'L', pw*0.770, ph*0.321,   // right underarm
+        'L', pw*0.770, ph*0.933,   // right body bottom
+        'L', pw*0.230, ph*0.933,   // left body bottom
+        'L', pw*0.230, ph*0.321,   // left underarm
+        'L', pw*0.030, ph*0.275,   // left sleeve bottom-outer
+        'L', pw*0.030, ph*0.138,   // left sleeve top-outer
+        'L', pw*0.205, ph*0.088,   // left shoulder
+        'Z'
+      ].join(' ');
+      const shirt = new fabric.Path(shirtPath, {
+        fill: bgColor, stroke: 'none',
         selectable: false, evented: false, name: '__bg__'
       });
-      fabricCanvas.add(collar);
+      fabricCanvas.add(shirt);
     } else {
       const rect = new fabric.Rect({
         left: 0, top: 0, width: pw, height: ph,
