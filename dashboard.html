@@ -280,6 +280,7 @@
           <div class="user-role">Peach State Owner</div>
         </div>
       </div>
+      <button onclick="logout()" style="margin-top:12px;width:100%;padding:8px;background:rgba(255,255,255,0.08);border:none;border-radius:7px;color:#A0A0A0;font-size:0.8rem;font-family:'Inter',sans-serif;cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">Sign out</button>
     </div>
   </div>
 
@@ -310,22 +311,22 @@
       <div class="stats-grid">
         <div class="stat-card green">
           <div class="stat-label">Orders today</div>
-          <div class="stat-val">4</div>
-          <div class="stat-change up">↑ 2 vs yesterday</div>
+          <div class="stat-val" id="statToday">0</div>
+          <div class="stat-change up">↑ vs yesterday</div>
         </div>
         <div class="stat-card peach">
           <div class="stat-label">Revenue this week</div>
-          <div class="stat-val">£186</div>
-          <div class="stat-change up">↑ £42 vs last week</div>
+          <div class="stat-val" id="statRevenue">£0</div>
+          <div class="stat-change up">↑ growing</div>
         </div>
         <div class="stat-card blue">
           <div class="stat-label">Pending print</div>
-          <div class="stat-val">2</div>
+          <div class="stat-val" id="statPending">0</div>
           <div class="stat-change neutral">Ready to download</div>
         </div>
         <div class="stat-card orange">
           <div class="stat-label">Dispatched today</div>
-          <div class="stat-val">1</div>
+          <div class="stat-val">0</div>
           <div class="stat-change neutral">Out for delivery</div>
         </div>
       </div>
@@ -354,44 +355,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr onclick="openModal('order1Modal')">
-              <td><div class="order-id">#PS-0041</div><div style="font-size:0.72rem;color:var(--mid)">2 min ago</div></td>
-              <td><div class="customer">Sarah M.</div><div class="customer-email">sarah.m@gmail.com</div></td>
-              <td><div class="product-chip">☕ Classic Mug</div></td>
-              <td><span style="font-size:0.8rem;color:var(--green);font-weight:600">✓ Print file ready</span></td>
-              <td class="price-cell">£12.99</td>
-              <td><span class="status-pill new">● New</span></td>
-              <td><button class="action-btn primary-btn">⬇ Download</button></td>
-            </tr>
-            <tr onclick="openModal('order2Modal')">
-              <td><div class="order-id">#PS-0040</div><div style="font-size:0.72rem;color:var(--mid)">1 hr ago</div></td>
-              <td><div class="customer">Dave T.</div><div class="customer-email">davet@outlook.com</div></td>
-              <td><div class="product-chip">👕 T-Shirt × 3</div></td>
-              <td><span style="font-size:0.8rem;color:var(--green);font-weight:600">✓ Print file ready</span></td>
-              <td class="price-cell">£59.97</td>
-              <td><span class="status-pill new">● New</span></td>
-              <td><button class="action-btn primary-btn">⬇ Download</button></td>
-            </tr>
-            <tr onclick="openModal('order3Modal')">
-              <td><div class="order-id">#PS-0039</div><div style="font-size:0.72rem;color:var(--mid)">3 hrs ago</div></td>
-              <td><div class="customer">Rachel K.</div><div class="customer-email">rachelk@yahoo.co.uk</div></td>
-              <td><div class="product-chip">🖼️ Canvas Print</div></td>
-              <td><span style="font-size:0.8rem;color:var(--orange);font-weight:600">⏳ Generating...</span></td>
-              <td class="price-cell">£29.99</td>
-              <td><span class="status-pill printing">◐ Printing</span></td>
-              <td><button class="action-btn">Mark done</button></td>
-            </tr>
-            <tr onclick="openModal('order4Modal')">
-              <td><div class="order-id">#PS-0038</div><div style="font-size:0.72rem;color:var(--mid)">Yesterday</div></td>
-              <td><div class="customer">Mike B.</div><div class="customer-email">mikebrown@me.com</div></td>
-              <td><div class="product-chip">📱 Phone Case</div></td>
-              <td><span style="font-size:0.8rem;color:var(--mid)">✓ Printed</span></td>
-              <td class="price-cell">£16.99</td>
-              <td><span class="status-pill shipped">✈ Shipped</span></td>
-              <td><button class="action-btn">View</button></td>
-            </tr>
-          </tbody>
+          <tbody id="ordersBody">
         </table>
       </div>
 
@@ -590,16 +554,160 @@
   </div>
 </div>
 
+<!-- Dynamic Order Modal -->
+<div class="modal-overlay" id="dynOrderModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2 id="dynTitle">Order</h2>
+        <div style="color:var(--mid);font-size:0.8rem;margin-top:4px" id="dynTime"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('dynOrderModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-label">Design preview</div>
+        <div style="border-radius:10px;overflow:hidden;background:var(--cream);margin-bottom:16px;text-align:center;padding:8px">
+          <img id="dynImg" src="" alt="Design preview" style="max-width:100%;max-height:260px;border-radius:8px;object-fit:contain">
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Order details</div>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-item-label">Product</div>
+            <div class="detail-item-val" id="dynProduct"></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">Total</div>
+            <div class="detail-item-val" id="dynTotal" style="color:var(--peach);font-weight:700"></div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">File format</div>
+            <div class="detail-item-val">PNG · Print ready</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-item-label">Payment</div>
+            <div class="detail-item-val" style="color:var(--green)">✓ Demo confirmed</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--green-pale);border:1.5px solid var(--green);border-radius:8px;padding:12px 14px;font-size:0.82rem;color:var(--charcoal)">
+        ✅ <strong>This is the magic:</strong> the customer designed this themselves. The print file is ready to download — no artwork back-and-forth.
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeModal('dynOrderModal')">Close</button>
+      <button class="modal-btn primary" id="dynDownloadBtn">⬇ Download print file (PNG)</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  // ── AUTH GATE ──
+  if (localStorage.getItem('ps_auth') !== 'jo') {
+    window.location.href = 'login.html';
+  }
+  function logout() {
+    localStorage.removeItem('ps_auth');
+    window.location.href = 'login.html';
+  }
+
+  // ── ORDERS ──
+  function getOrders() {
+    return JSON.parse(localStorage.getItem('ps_orders') || '[]');
+  }
+
+  function formatTime(ts) {
+    const diff = Date.now() - ts;
+    const mins = Math.floor(diff / 60000);
+    const hrs = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    if (mins < 2) return 'Just now';
+    if (mins < 60) return mins + ' min ago';
+    if (hrs < 24) return hrs + ' hr ago';
+    if (days === 1) return 'Yesterday';
+    return days + ' days ago';
+  }
+
+  function renderOrders() {
+    const orders = getOrders();
+    const tbody = document.getElementById('ordersBody');
+
+    // Update stats
+    document.getElementById('statToday').textContent = orders.length;
+    const revenue = orders.reduce((s, o) => s + o.price, 0);
+    document.getElementById('statRevenue').textContent = '£' + revenue.toFixed(2);
+    document.getElementById('statPending').textContent = orders.filter(o => o.status === 'new').length;
+
+    if (orders.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:48px;color:var(--mid);font-size:0.88rem">
+        No orders yet — <a href="design.html" style="color:var(--peach);font-weight:600">try the design tool</a> and place an order to see it here.
+      </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = orders.map((order, i) => `
+      <tr onclick="openOrderModal(${i})" style="cursor:pointer">
+        <td>
+          <div class="order-id">#${order.id}</div>
+          <div style="font-size:0.72rem;color:var(--mid)">${formatTime(order.timestamp)}</div>
+        </td>
+        <td>
+          <div class="customer">Demo Customer</div>
+          <div class="customer-email">customer@peachstate.co.uk</div>
+        </td>
+        <td><div class="product-chip">${order.productIcon} ${order.productName}${order.qty > 1 ? ' × ' + order.qty : ''}</div></td>
+        <td><span style="font-size:0.8rem;color:var(--green);font-weight:600">✓ Print file ready</span></td>
+        <td class="price-cell">£${order.price.toFixed(2)}</td>
+        <td><span class="status-pill new">● New</span></td>
+        <td><button class="action-btn primary-btn" onclick="event.stopPropagation();downloadDesign(${i})">⬇ Download</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function openOrderModal(i) {
+    const order = getOrders()[i];
+    if (!order) return;
+    document.getElementById('dynTitle').textContent = 'Order #' + order.id;
+    document.getElementById('dynTime').textContent = formatTime(order.timestamp) + ' · Demo payment confirmed';
+    document.getElementById('dynImg').src = order.designImage;
+    document.getElementById('dynProduct').textContent = order.productIcon + ' ' + order.productName + (order.qty > 1 ? ' × ' + order.qty : '');
+    document.getElementById('dynTotal').textContent = '£' + order.price.toFixed(2);
+    document.getElementById('dynDownloadBtn').onclick = () => downloadDesign(i);
+    document.getElementById('dynOrderModal').classList.add('open');
+  }
+
+  function downloadDesign(i) {
+    const order = getOrders()[i];
+    if (!order) return;
+    const a = document.createElement('a');
+    a.href = order.designImage;
+    a.download = 'peach-state-' + order.id + '.png';
+    a.click();
+  }
+
+  function clearOrders() {
+    if (confirm('Clear all demo orders?')) {
+      localStorage.removeItem('ps_orders');
+      renderOrders();
+    }
+  }
+
   function openModal(id) { document.getElementById(id).classList.add('open'); }
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
   document.querySelectorAll('.modal-overlay').forEach(el => {
     el.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
   });
+
   function filterOrders(status) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
   }
+
+  // Init
+  renderOrders();
 </script>
 </body>
 </html>
