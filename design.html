@@ -163,6 +163,14 @@
     transition: all .3s;
   }
   canvas { display: block; }
+  .side-btn {
+    padding: 7px 20px; border: none; background: var(--white);
+    color: var(--mid); font-size: 0.8rem; font-weight: 600;
+    font-family: 'Inter', sans-serif; cursor: pointer; transition: all .15s;
+  }
+  .side-btn:first-child { border-right: 1.5px solid var(--light); }
+  .side-btn.active { background: var(--peach); color: var(--white); }
+  .side-btn:hover:not(.active) { background: var(--cream); color: var(--charcoal); }
   .canvas-hint {
     position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
     background: rgba(44,44,44,0.7); color: var(--white);
@@ -546,6 +554,11 @@
 
   <!-- CANVAS AREA -->
   <div class="canvas-area">
+    <!-- Front / Back toggle — shown only for t-shirt -->
+    <div id="sideToggle" style="display:none;gap:0;margin-bottom:12px;border:1.5px solid var(--light);border-radius:8px;overflow:hidden;align-self:center">
+      <button id="btn-front" class="side-btn active" onclick="switchSide('front')">Front</button>
+      <button id="btn-back" class="side-btn" onclick="switchSide('back')">Back</button>
+    </div>
     <div class="canvas-toolbar">
       <button class="canvas-tool-btn" onclick="addText(); switchTab('text', document.querySelectorAll('.panel-tab')[1])">＋ Add Text</button>
       <label for="imgUpload" class="canvas-tool-btn" style="cursor:pointer">📁 Upload Image</label>
@@ -653,6 +666,8 @@
   let currentProduct = 'mug';
   let qty = 1;
   let fabricCanvas;
+  let currentSide = 'front';
+  let sideObjects = { front: [], back: [] };
 
   function initCanvas(productKey) {
     const p = PRODUCTS[productKey];
@@ -712,28 +727,59 @@
       });
       fabricCanvas.add(ellipse);
     } else if (productKey === 'tshirt') {
-      // Proper t-shirt silhouette
+      // Technical flat t-shirt — front has deeper crew neck, back is shallower
+      const neckCtrlY = (currentSide === 'front') ? ph * 0.158 : ph * 0.096;
       const shirtPath = [
-        'M', pw*0.40,  ph*0.100,   // left collar
-        'Q', pw*0.50,  ph*0.172,   // neck dip (control point)
-            pw*0.60,  ph*0.100,   // right collar
-        'L', pw*0.795, ph*0.088,   // right shoulder
-        'L', pw*0.970, ph*0.138,   // right sleeve top-outer
-        'L', pw*0.970, ph*0.275,   // right sleeve bottom-outer
-        'L', pw*0.770, ph*0.321,   // right underarm
-        'L', pw*0.770, ph*0.933,   // right body bottom
-        'L', pw*0.230, ph*0.933,   // left body bottom
-        'L', pw*0.230, ph*0.321,   // left underarm
-        'L', pw*0.030, ph*0.275,   // left sleeve bottom-outer
-        'L', pw*0.030, ph*0.138,   // left sleeve top-outer
-        'L', pw*0.205, ph*0.088,   // left shoulder
+        // Left collar → neck curve → right collar
+        'M', pw*0.388, ph*0.088,
+        'Q', pw*0.500, neckCtrlY, pw*0.612, ph*0.088,
+        // Right collar → right shoulder
+        'L', pw*0.750, ph*0.075,
+        // Right shoulder → right sleeve top (cubic curve, sweeps outward and slightly down)
+        'C', pw*0.878, ph*0.072, pw*0.972, ph*0.108, pw*0.972, ph*0.158,
+        // Right sleeve outer edge (straight down)
+        'L', pw*0.972, ph*0.308,
+        // Right sleeve bottom → right underarm (cubic curve sweeping inward)
+        'C', pw*0.960, ph*0.344, pw*0.858, ph*0.354, pw*0.778, ph*0.342,
+        // Right body side (straight down)
+        'L', pw*0.774, ph*0.920,
+        // Bottom hem (slight curve)
+        'Q', pw*0.500, ph*0.934, pw*0.226, ph*0.920,
+        // Left body side (straight up)
+        'L', pw*0.222, ph*0.342,
+        // Left underarm → left sleeve bottom (cubic curve sweeping outward)
+        'C', pw*0.142, ph*0.354, pw*0.040, ph*0.344, pw*0.028, ph*0.308,
+        // Left sleeve outer edge (straight up)
+        'L', pw*0.028, ph*0.158,
+        // Left sleeve top → left shoulder (cubic curve sweeping inward)
+        'C', pw*0.028, ph*0.108, pw*0.122, ph*0.072, pw*0.250, ph*0.075,
+        // Left shoulder → left collar
+        'L', pw*0.388, ph*0.088,
         'Z'
       ].join(' ');
+
       const shirt = new fabric.Path(shirtPath, {
-        fill: bgColor, stroke: 'none',
+        fill: bgColor,
+        stroke: 'rgba(0,0,0,0.18)',
+        strokeWidth: 1.5,
         selectable: false, evented: false, name: '__bg__'
       });
       fabricCanvas.add(shirt);
+
+      // Collar stitching detail (front only)
+      if (currentSide === 'front') {
+        const collarPath = [
+          'M', pw*0.400, ph*0.098,
+          'Q', pw*0.500, ph*0.172, pw*0.600, ph*0.098
+        ].join(' ');
+        const collar = new fabric.Path(collarPath, {
+          fill: 'transparent',
+          stroke: 'rgba(0,0,0,0.12)',
+          strokeWidth: 1.5,
+          selectable: false, evented: false, name: '__bg__'
+        });
+        fabricCanvas.add(collar);
+      }
     } else {
       const rect = new fabric.Rect({
         left: 0, top: 0, width: pw, height: ph,
@@ -748,11 +794,16 @@
     document.querySelectorAll('.product-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     currentProduct = key;
-    const prevObjects = getUserObjects();
+    // Reset front/back state when switching product
+    currentSide = 'front';
+    sideObjects = { front: [], back: [] };
+    // Show side toggle only for t-shirt
+    const toggle = document.getElementById('sideToggle');
+    if (toggle) {
+      toggle.style.display = key === 'tshirt' ? 'flex' : 'none';
+      document.querySelectorAll('.side-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-front'));
+    }
     initCanvas(key);
-    // Re-add user objects
-    prevObjects.forEach(obj => fabricCanvas.add(obj));
-    fabricCanvas.renderAll();
     updateSizeOptions(key);
     updateLayers();
   }
@@ -760,6 +811,31 @@
   function getUserObjects() {
     if (!fabricCanvas) return [];
     return fabricCanvas.getObjects().filter(o => o.name !== '__bg__');
+  }
+
+  function switchSide(side) {
+    if (side === currentSide) return;
+    // Save current side objects as JSON
+    sideObjects[currentSide] = getUserObjects().map(o => o.toJSON(['name']));
+    currentSide = side;
+    // Redraw canvas with new side background
+    fabricCanvas.clear();
+    fabricCanvas.backgroundColor = '#FFFFFF';
+    const p = PRODUCTS[currentProduct];
+    drawProductBackground(currentProduct, fabricCanvas.width, fabricCanvas.height, 1, p.bg);
+    // Restore this side's objects
+    const saved = sideObjects[side];
+    if (saved.length > 0) {
+      fabric.util.enlivenObjects(saved, function(objects) {
+        objects.forEach(obj => fabricCanvas.add(obj));
+        fabricCanvas.renderAll();
+        updateLayers();
+      });
+    }
+    // Update toggle UI
+    document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + side).classList.add('active');
+    updateLayers();
   }
 
   function updateSizeOptions(key) {
@@ -1053,6 +1129,9 @@
     }
     initCanvas(currentProduct);
     updateSizeOptions(currentProduct);
+    // Show side toggle if starting on tshirt
+    const toggle = document.getElementById('sideToggle');
+    if (toggle && currentProduct === 'tshirt') toggle.style.display = 'flex';
 
     // Rescale canvas on orientation change / resize
     let resizeTimer;
