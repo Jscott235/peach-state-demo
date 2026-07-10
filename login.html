@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Peach State</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --peach: #F28B5F;
+    --peach-light: #FAD4C0;
+    --peach-pale: #FDF4EF;
+    --cream: #FEFAF6;
+    --charcoal: #2C2C2C;
+    --mid: #6B6B6B;
+    --light: #E8E0D8;
+    --white: #FFFFFF;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .logo span { color: var(--peach); }
+  .subtitle {
+    text-align: center;
+    color: var(--mid);
+    font-size: 0.88rem;
+    margin-bottom: 36px;
+  }
+  .field { margin-bottom: 18px; }
+  .field label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 7px;
+  }
+  .field input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--light);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--charcoal);
+    background: var(--cream);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .field input:focus { border-color: var(--peach); }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--peach);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background .15s;
+  }
+  .btn:hover { background: #D9724A; }
+  .error {
+    background: #FFF5F5;
+    border: 1.5px solid #FC8181;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.83rem;
+    color: #C53030;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .demo-note {
+    margin-top: 24px;
+    padding: 12px 14px;
+    background: var(--peach-pale);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    color: var(--mid);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .demo-note strong { color: var(--peach); }
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--mid);
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--peach); }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">🍑 Peach <span>State</span></div>
+  <div class="subtitle">Owner dashboard — sign in to manage your orders</div>
+
+  <div class="error" id="errorMsg">Incorrect email or password. Try again.</div>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="jo@peachstate.co.uk" autocomplete="email">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+  </div>
+
+  <button class="btn" onclick="doLogin()">Sign in →</button>
+
+  <div class="demo-note">
+    <strong>Demo credentials</strong><br>
+    Email: jo@peachstate.co.uk<br>
+    Password: peachstate
+  </div>
+
+  <a href="index.html" class="back-link">← Back to storefront</a>
+</div>
+
+<script>
+  // Auto-redirect if already logged in
+  if (localStorage.getItem('ps_auth') === 'jo') {
+    window.location.href = 'dashboard.html';
+  }
+
+  function doLogin() {
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
+    const err = document.getElementById('errorMsg');
+
+    if (email === 'jo@peachstate.co.uk' && password === 'peachstate') {
+      localStorage.setItem('ps_auth', 'jo');
+      window.location.href = 'dashboard.html';
+    } else {
+      err.style.display = 'block';
+    }
+  }
+
+  // Allow Enter key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+</script>
+</body>
+</html>
